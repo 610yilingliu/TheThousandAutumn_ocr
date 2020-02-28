@@ -51,11 +51,11 @@ def make_bw(path_dict, new_dirname, div = 80):
         file_ls = path_dict[picname]
         for pic in file_ls:
             try:
-            # cannot use imread, because the filename contains Chinese
+                # cannot use imread, filename contains Chinese
                 img = cv2.imdecode(np.fromfile(pic, dtype=np.uint8), cv2.IMREAD_UNCHANGED)
                 im_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 im_bw = cv2.threshold(im_gray, div, 255, cv2.THRESH_BINARY)[1]
-                # create subfolders, folder name is label of pictures
+                # create subfolders, folder name = label of pictures
                 subfolder = new_dirname + '/' + picname
                 img_towrite = cv2.imencode('.png', im_bw)[1]
                 if not os.path.exists(subfolder):
@@ -69,6 +69,7 @@ def make_bw(path_dict, new_dirname, div = 80):
                         existed_md5 = md5_checker(subfolder + '/' + pic)
                         if existed_md5 == hashlib.md5(img_towrite).hexdigest():
                             label = 1
+                        break
                     if label == 0:
                         img_towrite.tofile(new_dirname + '/' + picname + '/' + random_str() +'.png')
 
