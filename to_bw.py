@@ -18,7 +18,7 @@ def random_str():
 
 def md5_checker(filepath):
     '''
-    Check existed md5, prevent from output dupicated picture.
+    Check existed md5, prevent from exporting dupicated picture.
     '''
     with open(filepath, 'rb') as f:
         content = f.read()
